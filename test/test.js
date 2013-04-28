@@ -76,8 +76,27 @@ describe('Emitter', function () {
     });
 
     describe('.once(event, callback)', function () {
-        it('adds a one-off callback');
-        it('can be removed with `off()`');
+        it('adds a one-off callback', function () {
+            var calls = [];
+            var foo = function foo() { calls.push('foo'); };
+            var bar = function bar() {};
+            emitter.once('foo', foo);
+            emitter.on('foo', bar);
+            emitter.trigger('foo');
+
+            expect(emitter._registry['foo']).to.eql([bar]);
+            expect(calls).to.eql(['foo']);
+        });
+
+        it('can be removed with `off()`', function () {
+            var foo = function foo() {};
+            var bar = function bar() {};
+            emitter.once('foo', foo);
+            emitter.on('foo', bar);
+            emitter.off('foo', foo);
+
+            expect(emitter._registry['foo']).to.eql([bar]);
+        });
     });
 
     describe('.off(event, callback)', function () {
