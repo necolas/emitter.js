@@ -55,11 +55,22 @@ describe('Emitter', function () {
 
     describe('.on(event, callback)', function () {
         describe('when the callback is a function', function () {
-            it('adds the callback');
-            it('does not add the callback if it\'s already registered');
+            it('adds the callback', function () {
+                var foo = function foo() {};
+                emitter.on('foo', foo);
+                expect(emitter.getListeners('foo')).to.eql([foo]);
+            });
+
+            it('does not add the callback if it\'s already registered', function () {
+                var foo = function foo() {};
+                emitter.on('foo', foo);
+                emitter.on('foo', foo);
+                expect(emitter.getListeners('foo')).to.eql([foo]);
+            });
         });
 
         describe('when the callback is not a function', function () {
+            // can't get .throw working :(
             it('throws a TypeError');
         });
     });
