@@ -10,7 +10,7 @@ Shim](https://github.com/kriskowal/es5-shim) for IE 8 support.
 Install with [Bower](http://bower.io):
 
 ```
-bower install --save-dev emitter.js
+bower install --save emitter.js
 ```
 
 The component can be used as a Node.js module, an AMD module, or a global.
