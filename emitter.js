@@ -65,6 +65,74 @@ Emitter.prototype.on = function (event, callback) {
 };
 
 /**
+ * Remove a specific `callback`, or `event`, or the entire registry
+ *
+ * If no arguments are supplied, then the entire registry is deleted. If just
+ * an event is supplied, then the event is deleted. If an event and callback
+ * are supplied, then the callback is unregistered from the event.
+ *
+ * @param {String} [event]
+ * @param {Function} [callback]
+ * @return {Emitter}
+ * @api public
+ */
+
+Emitter.prototype.off = function (event, callback) {
+    var argsLen = arguments.length;
+    var callbacks;
+    var index;
+
+    // if there are no arguments, delete the registry
+    if (argsLen === 0) {
+        removeEvent.call(this);
+        return this;
+    }
+
+    // if there is one argument, delete the event
+    if (argsLen === 1) {
+        removeEvent.call(this, event);
+        return this;
+    }
+
+    if (typeof callback !== 'function') {
+        throw new TypeError('Emitter.off(): the callback must be a function.')
+    }
+    else {
+        callbacks = this.getListeners(event);
+        index = callbacks.indexOf(callback);
+        if (index === -1) {
+           index = callbacks.indexOf(callback._wrapper);
+        }
+        // if the callback is registered or wrapped, remove it
+        if (index !== -1) {
+            callbacks.splice(index, 1);
+            // if there are no callbacks left, delete the event
+            if (callbacks.length === 0) {
+                removeEvent.call(this, event);
+            }
+        }
+    }
+
+    return this;
+
+    // remove an event
+    // if an event is not specified, delete the entire registry
+    function removeEvent(event) {
+        // don't bother if there's no registry yet
+        if (this._registry) {
+            if (event) {
+                // delete the event from the registry
+                delete this._registry[event];
+            }
+            else {
+                // delete the registry
+                delete this._registry;
+            }
+        }
+    }
+};
+
+/**
  * Expose `Emitter`
  */
 
