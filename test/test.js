@@ -2,7 +2,13 @@ var expect = require('chai').expect;
 var Emitter = require('../emitter.js');
 
 describe('Emitter(obj)', function () {
-    it('should mixin')
+    it('can work as a mixin', function () {
+        var obj = {};
+        var foo = function foo() {};
+        Emitter(obj);
+        obj.on('foo', foo);
+        expect(obj._registry).to.eql({'foo': [foo]});
+    });
 });
 
 describe('Emitter', function () {
