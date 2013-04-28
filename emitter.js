@@ -4,7 +4,33 @@
 
 'use strict';
 
-function Emitter() {
+/**
+ * Emitter manages event registration and triggering
+ *
+ * @param {Object} [obj]
+ * @api public
+ */
+
+function Emitter(obj) {
+    if (obj) {
+        return mixin(obj);
+    }
+}
+
+/**
+ * Mixin the emitter properties.
+ *
+ * @param {Object} obj
+ * @return {Object}
+ * @api private
+ */
+
+function mixin(obj) {
+    Object.keys(Emitter.prototype).forEach(function (key) {
+        obj[key] = Emitter.prototype[key];
+    });
+
+    return obj;
 }
 
 /**
