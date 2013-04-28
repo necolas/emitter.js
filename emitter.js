@@ -65,6 +65,34 @@ Emitter.prototype.on = function (event, callback) {
 };
 
 /**
+ * Registers a one-off callback for an `event`.
+ * The callback is invoked just once, and then removed from the `event`.
+ *
+ * @param {String} event
+ * @param {Function} callback
+ * @return {Emitter}
+ * @api public
+ */
+
+Emitter.prototype.once = function (event, callback) {
+    var self = this;
+
+    // create a callback that will remove itself when run,
+    // and pass its arguments on to the original callback
+    function wrapper() {
+        self.off(event, wrapper);
+        callback.apply(this, arguments);
+    }
+
+    // store the wrapper function on the original callback
+    callback._wrapper = wrapper;
+    // register our wrapped callback
+    this.on(event, wrapper);
+
+    return this;
+};
+
+/**
  * Remove a specific `callback`, or `event`, or the entire registry
  *
  * If no arguments are supplied, then the entire registry is deleted. If just
@@ -95,11 +123,13 @@ Emitter.prototype.off = function (event, callback) {
     }
 
     if (typeof callback !== 'function') {
-        throw new TypeError('Emitter.off(): the callback must be a function.')
+        throw new TypeError('Emitter.off(): the 2nd argument must be a function.')
     }
     else {
         callbacks = this.getListeners(event);
         index = callbacks.indexOf(callback);
+        // if the callback is not found,
+        // check if it's registered as a one-off callback
         if (index === -1) {
            index = callbacks.indexOf(callback._wrapper);
         }
