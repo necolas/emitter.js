@@ -133,6 +133,45 @@ Emitter.prototype.off = function (event, callback) {
 };
 
 /**
+ * Trigger a given `event`
+ *
+ * When an event is triggered, every callback registered for the event will be
+ * called. Arguments will be passed on to the callback.
+ *
+ * @param {String} event
+ * @param {Mixed} ...
+ * @return {Emitter}
+ */
+
+Emitter.prototype.trigger = function (event) {
+    // create an array of the additional arguments
+    var args = Array.prototype.slice.call(arguments, 1);
+    var callbacks = this.getListeners(event);
+    var len = callbacks.length;
+
+    if (len) {
+        // copy the array of callbacks
+        callbacks = callbacks.slice(0);
+        // call the appropriate handler function,
+        // passing it event information as an argument
+        for (var i = 0; i < len; i += 1) {
+            callbacks[i].apply(this, args);
+        }
+    }
+    else {
+        throw new Error ('Emitter.trigger(): the `' + event + '` event is not recognised');
+    }
+
+    return this;
+};
+
+/**
+ * Alias for `trigger`
+ */
+
+Emitter.prototype.emit = Emitter.prototype.trigger;
+
+/**
  * Expose `Emitter`
  */
 
