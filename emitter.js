@@ -26,6 +26,21 @@ Emitter.prototype.getListeners = function (event) {
 };
 
 /**
+ * Check if this emitter has callbacks for a given `event`
+ *
+ * @param {String} event
+ * @return {Boolean}
+ * @api public
+ */
+
+Emitter.prototype.hasListeners = function (event) {
+    if (this.getListeners(event).length) {
+        return true;
+    }
+    return false;
+};
+
+/**
  * Expose `Emitter`
  */
 
