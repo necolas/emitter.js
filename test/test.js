@@ -58,14 +58,14 @@ describe('Emitter', function () {
             it('adds the callback', function () {
                 var foo = function foo() {};
                 emitter.on('foo', foo);
-                expect(emitter.getListeners('foo')).to.eql([foo]);
+                expect(emitter._registry['foo']).to.eql([foo]);
             });
 
             it('does not add the callback if it\'s already registered', function () {
                 var foo = function foo() {};
                 emitter.on('foo', foo);
                 emitter.on('foo', foo);
-                expect(emitter.getListeners('foo')).to.eql([foo]);
+                expect(emitter._registry['foo']).to.eql([foo]);
             });
         });
 
