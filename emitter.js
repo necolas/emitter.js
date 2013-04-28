@@ -41,6 +41,30 @@ Emitter.prototype.hasListeners = function (event) {
 };
 
 /**
+ * Register a `callback` for a given `event`.
+ *
+ * @param {String} event
+ * @param {Function} callback
+ * @return {Emitter}
+ * @api public
+ */
+
+Emitter.prototype.on = function (event, callback) {
+    var callbacks = this.getListeners(event);
+
+    if (typeof callback !== 'function') {
+      throw new TypeError ('Emitter.on(): the 2nd argument must be a function.');
+    }
+
+    // avoid pushing callbacks onto the array if they're already registered
+    if (callbacks.indexOf(callback) === -1) {
+        callbacks.push(callback);
+    }
+
+    return this;
+};
+
+/**
  * Expose `Emitter`
  */
 
