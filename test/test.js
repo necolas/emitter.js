@@ -82,20 +82,42 @@ describe('Emitter', function () {
 
     describe('.off(event, callback)', function () {
         describe('when the callback is a function', function () {
-            it('removes the callback');
+            it('removes the callback', function () {
+                var foo = function foo() {};
+                var bar = function bar() {};
+                emitter._registry = {'foo': [foo, bar]};
+                emitter.off('foo', foo);
+
+                expect(emitter._registry['foo']).to.eql([bar]);
+            });
         });
 
         describe('when the callback is not a function', function () {
+            // can't get .throw working :(
             it('throws a TypeError');
         });
     });
 
     describe('.off(event)', function () {
-        it('deletes the event (and its callbacks)');
+        it('deletes the event (and its callbacks)', function () {
+            var foo = function foo() {};
+            var bar = function bar() {};
+            emitter._registry = {'foo': [foo, bar]};
+            emitter.off('foo');
+
+            expect(emitter._registry['foo']).to.equal(undefined);
+        });
     });
 
     describe('.off()', function () {
-        it('deletes the registry');
+        it('deletes the registry', function () {
+            var foo = function foo() {};
+            var bar = function bar() {};
+            emitter._registry = {'foo': [foo, bar]};
+            emitter.off();
+
+            expect(emitter._registry).to.equal(undefined);
+        });
     });
 
     describe('.trigger(event, args)', function () {
