@@ -6,6 +6,12 @@ describe('Emitter(obj)', function () {
 });
 
 describe('Emitter', function () {
+    var emitter;
+
+    beforeEach(function () {
+        emitter = new Emitter();
+    });
+
     describe('.hasListeners(event)', function () {
         describe('when the event has callbacks', function(){
             it('returns true');
@@ -17,12 +23,27 @@ describe('Emitter', function () {
     });
 
     describe('.getListeners(event)', function () {
+        describe('when there is no event registry', function () {
+            it('creates the event registry', function () {
+                expect(emitter._registry).to.equal(undefined);
+                emitter.getListeners('foo');
+                expect(emitter._registry).to.eql({'foo':[]});
+            });
+        });
+
         describe('when the event has callbacks', function () {
-            it('returns an array of callbacks');
+            it('returns an array of callbacks', function () {
+                var foo = function foo() {};
+                var bar = function bar() {};
+                emitter._registry = {'foo':[foo, bar]};
+                expect(emitter.getListeners('foo')).to.eql([foo, bar]);
+            });
         });
 
         describe('when the event has no callbacks (i.e., it doesn\'t exist in the registry)', function () {
-            it('returns an empty array');
+            it('returns an empty array', function () {
+                expect(emitter.getListeners('foo')).to.eql([]);
+            });
         });
     });
 
