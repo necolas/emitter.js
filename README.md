@@ -13,6 +13,8 @@ Install with [Bower](http://bower.io):
 bower install --save-dev emitter.js
 ```
 
+The component can be used as a Node.js module, an AMD module, or a global.
+
 ## API
 
 ### Emitter(obj)
@@ -23,8 +25,8 @@ As an Emitter instance:
 
 ```js
 var Emitter = require('emitter');
-var emitter = new Emitter;
-emitter.trigger('foo');
+var foo = new Emitter;
+foo.trigger('foo');
 ```
 
 As a mixin:
@@ -39,7 +41,7 @@ foo.trigger('bar');
 
 As a prototype mixin:
 
-```
+```js
 var Emitter = require('emitter');
 var Foo = function () {};
 Emitter(Foo.prototype);
@@ -55,7 +57,7 @@ var handler = function () {
     console.log('The function `handler` has been registered for the event `foo`.');
 };
 
-Emitter.on('foo', handler);
+foo.on('foo', handler);
 ```
 
 ### Emitter#once(event, callback)
@@ -68,7 +70,7 @@ var handler = function () {
     console.log('The function `handler` has been registered as a one-off callback for the event `foo`.');
 };
 
-Emitter.once('foo', handler);
+foo.once('foo', handler);
 ```
 
 ### Emitter#off([event], [callback])
@@ -82,9 +84,9 @@ var handler = function () {
     console.log('Registered for the event `foo`.');
 };
 
-Emitter.off('foo', handler);
-Emitter.off('foo');
-Emitter.off();
+foo.off('foo', handler);
+foo.off('foo');
+foo.off();
 ```
 
 ### Emitter#trigger(event, [...])
@@ -93,7 +95,7 @@ Trigger an `event` with optional arguments. Alias: `emit`.
 
 ```js
 var data = { name: 'nicolas' };
-Emitter.trigger('foo', data);
+foo.trigger('foo', data);
 ```
 
 ### Emitter#getListeners(event)
@@ -102,7 +104,7 @@ Return an array of callbacks registered for the `event`, or an empty array.
 Initializes the registry if necessary.
 
 ```js
-Emitter.getListeners('foo');
+foo.getListeners('foo');
 ```
 
 ### Emitter#hasListeners(event)
@@ -110,7 +112,7 @@ Emitter.getListeners('foo');
 Check if any callbacks are registered for the `event`.
 
 ```js
-Emitter.hasListeners('foo');
+foo.hasListeners('foo');
 ```
 
 ## Browser support
