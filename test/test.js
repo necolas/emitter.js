@@ -121,9 +121,62 @@ describe('Emitter', function () {
     });
 
     describe('.trigger(event, args)', function () {
-        it('fires an event\'s callback');
-        it('fires an event\'s callback with arguments');
-        it('fires all callbacks for an event, in order');
-        it('fires all callbacks for an event, after one has been removed');
+        describe('when the event exists', function () {
+            it('fires an event\'s callback', function () {
+                var calls = [];
+                var foo = function foo() { calls.push('foo'); };
+
+                emitter.on('foo', foo);
+                emitter.trigger('foo');
+
+                expect(calls).to.eql(['foo']);
+            });
+
+            it('fires an event\'s callback with arguments', function () {
+                var calls = [];
+                var foo = function foo(arg1, arg2) { calls.push(arg1, arg2); };
+
+                emitter.on('foo', foo);
+                emitter.trigger('foo', 1, 2);
+                emitter.trigger('foo', 3, 4);
+
+                expect(calls).to.eql([
+                    1, 2,
+                    3, 4
+                ]);
+            });
+
+            it('fires all callbacks for an event, in order', function () {
+                var calls = [];
+                var foo = function foo() { calls.push('foo'); };
+                var bar = function foo() { calls.push('bar'); };
+
+                emitter.on('foo', foo);
+                emitter.on('foo', bar);
+                emitter.trigger('foo');
+
+                expect(calls).to.eql(['foo', 'bar']);
+            });
+
+            it('fires all callbacks for an event, after one has been removed', function () {
+                var calls = [];
+                var foo = function foo() { calls.push('foo'); };
+                var bar = function foo() { calls.push('bar'); };
+                var baz = function foo() { calls.push('baz'); };
+
+                emitter.on('foo', foo);
+                emitter.on('foo', bar);
+                emitter.on('foo', baz);
+                emitter.off('foo', bar);
+                emitter.trigger('foo');
+
+                expect(calls).to.eql(['foo', 'baz']);
+            });
+        });
+
+        describe('when the event doesn\'t exist', function () {
+            // can't get .throw working :(
+            it('throws an Error');
+        });
     });
 });
