@@ -26,9 +26,14 @@ function Emitter(obj) {
  */
 
 function mixin(obj) {
-    Object.keys(Emitter.prototype).forEach(function (key) {
-        obj[key] = Emitter.prototype[key];
-    });
+    var key;
+    var proto = Emitter.prototype;
+
+    for (key in proto) {
+        if (Object.prototype.hasOwnProperty.call(proto, key)) {
+            obj[key] = proto[key];
+        }
+    }
 
     return obj;
 }
