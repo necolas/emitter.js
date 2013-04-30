@@ -88,7 +88,7 @@ Emitter.prototype.on = function (event, callback) {
     }
 
     // avoid pushing callbacks onto the array if they're already registered
-    if (callbacks.indexOf(callback) === -1) {
+    if (indexOf(callbacks, callback) === -1) {
         callbacks.push(callback);
     }
 
@@ -158,11 +158,11 @@ Emitter.prototype.off = function (event, callback) {
     }
     else {
         callbacks = this.getListeners(event);
-        index = callbacks.indexOf(callback);
+        index = indexOf(callbacks, callback);
         // if the callback is not found,
         // check if it's registered as a one-off callback
         if (index === -1) {
-           index = callbacks.indexOf(callback._wrapper);
+           index = indexOf(callbacks, callback._wrapper);
         }
         // if the callback is registered or wrapped, remove it
         if (index !== -1) {
@@ -231,6 +231,39 @@ Emitter.prototype.trigger = function (event) {
  */
 
 Emitter.prototype.emit = Emitter.prototype.trigger;
+
+/**
+ * Basic Array.indexOf utility
+ *
+ * No `fromIndex` support. Just enough for what this component needs.
+ *
+ * @param {Array} arr Array to search
+ * @param {Object} item Item to search for
+ * @api Private
+ */
+
+function indexOf(arr, item) {
+    var i;
+
+    // use native `indexOf` if available
+    if (Array.prototype.indexOf) {
+        return arr.indexOf(item);
+    }
+
+    // IE 8 doesn't support `indexOf`, so...
+    if (arr == null) {
+        throw new TypeError();
+    }
+
+    i = arr.length;
+    while (i--) {
+        if (arr[i] === item) {
+            return i;
+        }
+    }
+
+    return -1;
+}
 
 /**
  * Expose `Emitter`
