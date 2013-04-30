@@ -2,8 +2,7 @@
 
 [![Build Status](https://secure.travis-ci.org/necolas/emitter.js.png?branch=master)](http://travis-ci.org/necolas/emitter.js)
 
-JavaScript event-emitter. Requires [ES5
-Shim](https://github.com/kriskowal/es5-shim) for IE 8 support.
+JavaScript event-emitter.
 
 ## Installation
 
@@ -121,4 +120,4 @@ foo.hasListeners('foo');
 * Opera (latest)
 * Firefox 4+
 * Safari 5+
-* Internet Explorer 8+ (require ES5 Shim)
+* Internet Explorer 8+

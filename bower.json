@@ -1,8 +1,5 @@
 {
     "name": "emitter.js",
     "description": "JavaScript event emitter",
-    "version": "1.0.0",
-    "dependencies": {
-        "es5-shim": "2.0.x"
-    }
+    "version": "1.0.0"
 }
