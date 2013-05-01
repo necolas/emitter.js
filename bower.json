@@ -2,5 +2,12 @@
     "name": "emitter.js",
     "description": "JavaScript event emitter",
     "version": "1.0.0",
-    "main": "emitter.js"
+    "main": "emitter.js",
+    "ignore": [
+        "test",
+        ".jshintrc",
+        ".travis.yml",
+        "CHANGELOG.md",
+        "package.json"
+    ]
 }
