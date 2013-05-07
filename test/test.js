@@ -182,21 +182,6 @@ describe('Emitter', function () {
 
                 expect(calls).to.eql(['foo', 'bar']);
             });
-
-            it('fires all callbacks for an event, after one has been removed', function () {
-                var calls = [];
-                var foo = function foo() { calls.push('foo'); };
-                var bar = function foo() { calls.push('bar'); };
-                var baz = function foo() { calls.push('baz'); };
-
-                emitter.on('foo', foo);
-                emitter.on('foo', bar);
-                emitter.on('foo', baz);
-                emitter.off('foo', bar);
-                emitter.trigger('foo');
-
-                expect(calls).to.eql(['foo', 'baz']);
-            });
         });
 
         describe('when the event doesn\'t exist', function () {
