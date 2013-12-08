@@ -219,9 +219,6 @@ Emitter.prototype.trigger = function (event) {
             callbacks[i].apply(this, args);
         }
     }
-    else {
-        throw new Error ('Emitter.trigger(): the `' + event + '` event is not recognised');
-    }
 
     return this;
 };

@@ -197,10 +197,5 @@ describe('Emitter', function () {
                 expect(calls).to.eql(['foo', 'bar']);
             });
         });
-
-        describe('when the event doesn\'t exist', function () {
-            // can't get .throw working :(
-            it('throws an Error');
-        });
     });
 });
