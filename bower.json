@@ -1,7 +1,7 @@
 {
     "name": "emitter.js",
     "description": "JavaScript event emitter",
-    "version": "1.0.1",
+    "version": "1.1.0",
     "main": "emitter.js",
     "ignore": [
         ".*",

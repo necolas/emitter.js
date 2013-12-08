@@ -1,4 +1,4 @@
-/*! emitter.js v1.0.1 - Nicolas Gallagher - MIT license */
+/*! emitter.js v1.1.0 - Nicolas Gallagher - MIT license */
 
 ;(function (global) {
 
