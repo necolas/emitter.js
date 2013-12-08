@@ -4,9 +4,9 @@
     "version": "1.0.1",
     "main": "emitter.js",
     "ignore": [
+        ".*",
         "test",
-        ".jshintrc",
-        ".travis.yml",
+        "Makefile",
         "CHANGELOG.md",
         "package.json"
     ]
