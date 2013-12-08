@@ -16,5 +16,10 @@
     "trailing": true,
     "smarttabs": true,
     "white": true,
-    "indent": false
+    "indent": false,
+    "predef": [
+        "describe",
+        "beforeEach",
+        "it"
+    ]
 }
