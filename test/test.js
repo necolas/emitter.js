@@ -1,3 +1,5 @@
+'use strict';
+
 var expect = require('chai').expect;
 var Emitter = require('../emitter.js');
 
@@ -44,8 +46,8 @@ describe('Emitter', function () {
     });
 
     describe('.hasListeners(event)', function () {
-        describe('when the event has callbacks', function(){
-            it('returns true', function(){
+        describe('when the event has callbacks', function () {
+            it('returns true', function () {
                 var foo = function foo() {};
                 emitter._registry = {'foo': [foo]};
                 expect(emitter.hasListeners('foo')).to.equal(true);
@@ -76,8 +78,14 @@ describe('Emitter', function () {
         });
 
         describe('when the callback is not a function', function () {
-            // can't get .throw working :(
-            it('throws a TypeError');
+            var cb = 'String';
+            var foo = function () {
+                emitter.on('foo', cb);
+            };
+
+            it('throws a TypeError', function () {
+                expect(foo).to.Throw(TypeError);
+            });
         });
     });
 
@@ -118,8 +126,14 @@ describe('Emitter', function () {
         });
 
         describe('when the callback is not a function', function () {
-            // can't get .throw working :(
-            it('throws a TypeError');
+            var cb = 'String';
+            var foo = function () {
+                emitter.on('foo', cb);
+            };
+
+            it('throws a TypeError', function () {
+                expect(foo).to.Throw(TypeError);
+            });
         });
     });
 
