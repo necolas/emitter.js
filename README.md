@@ -114,6 +114,20 @@ Check if any callbacks are registered for the `event`.
 foo.hasListeners('foo');
 ```
 
+## Testing
+
+Install and run the test suite:
+
+```
+make
+```
+
+Re-run the test suite:
+
+```
+make test
+```
+
 ## Browser support
 
 * Google Chrome (latest)
