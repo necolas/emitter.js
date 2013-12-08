@@ -1,12 +1,12 @@
 {
-    "name": "emitter.js",
-    "description": "JavaScript event emitter",
-    "version": "1.0.1",
-    "devDependencies": {
-        "chai": "*",
-        "mocha": "*"
-    },
-    "scripts": {
-        "test": "mocha --no-colors --reporter spec"
-    }
+  "name": "emitter.js",
+  "description": "JavaScript event emitter",
+  "version": "1.0.1",
+  "devDependencies": {
+    "chai": "~1.8.1",
+    "mocha": "~1.15.1"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/mocha --no-colors --reporter spec"
+  }
 }
