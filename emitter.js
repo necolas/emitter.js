@@ -14,9 +14,9 @@ module.exports = Emitter;
  */
 
 function Emitter(obj) {
-    if (obj) {
-        return mixin(obj);
-    }
+  if (obj) {
+    return mixin(obj);
+  }
 }
 
 /**
@@ -28,16 +28,16 @@ function Emitter(obj) {
  */
 
 function mixin(obj) {
-    var key;
-    var proto = Emitter.prototype;
+  var key;
+  var proto = Emitter.prototype;
 
-    for (key in proto) {
-        if (Object.prototype.hasOwnProperty.call(proto, key)) {
-            obj[key] = proto[key];
-        }
+  for (key in proto) {
+    if (Object.prototype.hasOwnProperty.call(proto, key)) {
+      obj[key] = proto[key];
     }
+  }
 
-    return obj;
+  return obj;
 }
 
 /**
@@ -50,12 +50,12 @@ function mixin(obj) {
  */
 
 Emitter.prototype.getListeners = function (event) {
-    // get the registry; create it if missing
-    var registry = this._registry || (this._registry = {});
-    // get the array of callbacks for an event; create it if missing
-    var callbacks = registry[event] || (registry[event] = []);
+  // get the registry; create it if missing
+  var registry = this._registry || (this._registry = {});
+  // get the array of callbacks for an event; create it if missing
+  var callbacks = registry[event] || (registry[event] = []);
 
-    return callbacks;
+  return callbacks;
 };
 
 /**
@@ -67,10 +67,10 @@ Emitter.prototype.getListeners = function (event) {
  */
 
 Emitter.prototype.hasListeners = function (event) {
-    if (this.getListeners(event).length) {
-        return true;
-    }
-    return false;
+  if (this.getListeners(event).length) {
+    return true;
+  }
+  return false;
 };
 
 /**
@@ -83,18 +83,18 @@ Emitter.prototype.hasListeners = function (event) {
  */
 
 Emitter.prototype.on = function (event, callback) {
-    var callbacks = this.getListeners(event);
+  var callbacks = this.getListeners(event);
 
-    if (typeof callback !== 'function') {
-        throw new TypeError('Emitter.on(): the 2nd argument must be a function.');
-    }
+  if (typeof callback !== 'function') {
+    throw new TypeError('Emitter.on(): the 2nd argument must be a function.');
+  }
 
-    // avoid pushing callbacks onto the array if they're already registered
-    if (indexOf(callbacks, callback) === -1) {
-        callbacks.push(callback);
-    }
+  // avoid pushing callbacks onto the array if they're already registered
+  if (indexOf(callbacks, callback) === -1) {
+    callbacks.push(callback);
+  }
 
-    return this;
+  return this;
 };
 
 /**
@@ -108,21 +108,21 @@ Emitter.prototype.on = function (event, callback) {
  */
 
 Emitter.prototype.once = function (event, callback) {
-    var self = this;
+  var self = this;
 
-    // create a callback that will remove itself when run,
-    // and pass its arguments on to the original callback
-    function wrapper() {
-        self.off(event, wrapper);
-        callback.apply(this, arguments);
-    }
+  // create a callback that will remove itself when run,
+  // and pass its arguments on to the original callback
+  function wrapper() {
+    self.off(event, wrapper);
+    callback.apply(this, arguments);
+  }
 
-    // store the wrapper function on the original callback
-    callback._wrapper = wrapper;
-    // register our wrapped callback
-    this.on(event, wrapper);
+  // store the wrapper function on the original callback
+  callback._wrapper = wrapper;
+  // register our wrapped callback
+  this.on(event, wrapper);
 
-    return this;
+  return this;
 };
 
 /**
@@ -139,60 +139,60 @@ Emitter.prototype.once = function (event, callback) {
  */
 
 Emitter.prototype.off = function (event, callback) {
-    var argsLen = arguments.length;
-    var callbacks;
-    var index;
+  var argsLen = arguments.length;
+  var callbacks;
+  var index;
 
-    // if there are no arguments, delete the registry
-    if (argsLen === 0) {
-        removeEvent.call(this);
-        return this;
-    }
-
-    // if there is one argument, delete the event
-    if (argsLen === 1) {
-        removeEvent.call(this, event);
-        return this;
-    }
-
-    if (typeof callback !== 'function') {
-        throw new TypeError('Emitter.off(): the 2nd argument must be a function.');
-    }
-    else {
-        callbacks = this.getListeners(event);
-        index = indexOf(callbacks, callback);
-        // if the callback is not found,
-        // check if it's registered as a one-off callback
-        if (index === -1) {
-            index = indexOf(callbacks, callback._wrapper);
-        }
-        // if the callback is registered or wrapped, remove it
-        if (index !== -1) {
-            callbacks.splice(index, 1);
-            // if there are no callbacks left, delete the event
-            if (callbacks.length === 0) {
-                removeEvent.call(this, event);
-            }
-        }
-    }
-
+  // if there are no arguments, delete the registry
+  if (argsLen === 0) {
+    removeEvent.call(this);
     return this;
+  }
 
-    // remove an event
-    // if an event is not specified, delete the entire registry
-    function removeEvent(event) {
-        // don't bother if there's no registry yet
-        if (this._registry) {
-            if (event) {
-                // delete the event from the registry
-                delete this._registry[event];
-            }
-            else {
-                // delete the registry
-                delete this._registry;
-            }
-        }
+  // if there is one argument, delete the event
+  if (argsLen === 1) {
+    removeEvent.call(this, event);
+    return this;
+  }
+
+  if (typeof callback !== 'function') {
+    throw new TypeError('Emitter.off(): the 2nd argument must be a function.');
+  }
+  else {
+    callbacks = this.getListeners(event);
+    index = indexOf(callbacks, callback);
+    // if the callback is not found,
+    // check if it's registered as a one-off callback
+    if (index === -1) {
+      index = indexOf(callbacks, callback._wrapper);
     }
+    // if the callback is registered or wrapped, remove it
+    if (index !== -1) {
+      callbacks.splice(index, 1);
+      // if there are no callbacks left, delete the event
+      if (callbacks.length === 0) {
+        removeEvent.call(this, event);
+      }
+    }
+  }
+
+  return this;
+
+  // remove an event
+  // if an event is not specified, delete the entire registry
+  function removeEvent(event) {
+    // don't bother if there's no registry yet
+    if (this._registry) {
+      if (event) {
+        // delete the event from the registry
+        delete this._registry[event];
+      }
+      else {
+        // delete the registry
+        delete this._registry;
+      }
+    }
+  }
 };
 
 /**
@@ -207,22 +207,22 @@ Emitter.prototype.off = function (event, callback) {
  */
 
 Emitter.prototype.trigger = function (event) {
-    // create an array of the additional arguments
-    var args = Array.prototype.slice.call(arguments, 1);
-    var callbacks = this.getListeners(event);
-    var len = callbacks.length;
+  // create an array of the additional arguments
+  var args = Array.prototype.slice.call(arguments, 1);
+  var callbacks = this.getListeners(event);
+  var len = callbacks.length;
 
-    if (len) {
-        // copy the array of callbacks
-        callbacks = callbacks.slice(0);
-        // call the appropriate handler function,
-        // passing it event information as an argument
-        for (var i = 0; i < len; i += 1) {
-            callbacks[i].apply(this, args);
-        }
+  if (len) {
+    // copy the array of callbacks
+    callbacks = callbacks.slice(0);
+    // call the appropriate handler function,
+    // passing it event information as an argument
+    for (var i = 0; i < len; i += 1) {
+      callbacks[i].apply(this, args);
     }
+  }
 
-    return this;
+  return this;
 };
 
 /**
@@ -242,24 +242,24 @@ Emitter.prototype.emit = Emitter.prototype.trigger;
  */
 
 function indexOf(arr, item) {
-    var i;
+  var i;
 
-    // use native `indexOf` if available
-    if (Array.prototype.indexOf) {
-        return arr.indexOf(item);
+  // use native `indexOf` if available
+  if (Array.prototype.indexOf) {
+    return arr.indexOf(item);
+  }
+
+  // IE 8 doesn't support `indexOf`, so...
+  if (arr == null) {
+    throw new TypeError();
+  }
+
+  i = arr.length;
+  while (i--) {
+    if (arr[i] === item) {
+      return i;
     }
+  }
 
-    // IE 8 doesn't support `indexOf`, so...
-    if (arr == null) {
-        throw new TypeError();
-    }
-
-    i = arr.length;
-    while (i--) {
-        if (arr[i] === item) {
-            return i;
-        }
-    }
-
-    return -1;
+  return -1;
 }

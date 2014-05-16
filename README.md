@@ -47,7 +47,7 @@ being registered.
 
 ```js
 var handler = function () {
-    console.log('The function `handler` has been registered for the event `foo`.');
+  console.log('The function `handler` has been registered for the event `foo`.');
 };
 
 foo.on('foo', handler);
@@ -60,7 +60,7 @@ invoked the first time.
 
 ```js
 var handler = function () {
-    console.log('The function `handler` has been registered as a one-off callback for the event `foo`.');
+  console.log('The function `handler` has been registered as a one-off callback for the event `foo`.');
 };
 
 foo.once('foo', handler);
@@ -74,7 +74,7 @@ event registry will be deleted.
 
 ```js
 var handler = function () {
-    console.log('Registered for the event `foo`.');
+  console.log('Registered for the event `foo`.');
 };
 
 foo.off('foo', handler);
