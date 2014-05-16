@@ -1,5 +1,7 @@
 === HEAD
 
+* Replace UMD module format with CommonJS.
+
 === 1.1.0 (December 8, 2013)
 
 * Allow unregistered events to be triggered.

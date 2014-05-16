@@ -6,13 +6,7 @@ JavaScript event-emitter.
 
 ## Installation
 
-Install with [Bower](http://bower.io):
-
-```
-bower install --save emitter.js
-```
-
-The component can be used as a Node.js module, an AMD module, or a global.
+[Bower](http://bower.io/): `bower install emitter.js`
 
 ## API
 

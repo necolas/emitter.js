@@ -1,8 +1,10 @@
-/*! emitter.js v1.1.0 - Nicolas Gallagher - MIT license */
-
-;(function (global) {
-
 'use strict';
+
+/**
+ * Expose `Emitter`
+ */
+
+module.exports = Emitter;
 
 /**
  * Emitter manages event registration and triggering
@@ -84,7 +86,7 @@ Emitter.prototype.on = function (event, callback) {
     var callbacks = this.getListeners(event);
 
     if (typeof callback !== 'function') {
-      throw new TypeError ('Emitter.on(): the 2nd argument must be a function.');
+        throw new TypeError('Emitter.on(): the 2nd argument must be a function.');
     }
 
     // avoid pushing callbacks onto the array if they're already registered
@@ -154,7 +156,7 @@ Emitter.prototype.off = function (event, callback) {
     }
 
     if (typeof callback !== 'function') {
-        throw new TypeError('Emitter.off(): the 2nd argument must be a function.')
+        throw new TypeError('Emitter.off(): the 2nd argument must be a function.');
     }
     else {
         callbacks = this.getListeners(event);
@@ -162,7 +164,7 @@ Emitter.prototype.off = function (event, callback) {
         // if the callback is not found,
         // check if it's registered as a one-off callback
         if (index === -1) {
-           index = indexOf(callbacks, callback._wrapper);
+            index = indexOf(callbacks, callback._wrapper);
         }
         // if the callback is registered or wrapped, remove it
         if (index !== -1) {
@@ -261,24 +263,3 @@ function indexOf(arr, item) {
 
     return -1;
 }
-
-/**
- * Expose `Emitter`
- */
-
-// node export
-if (typeof exports === 'object') {
-    module.exports = Emitter;
-}
-// amd export
-else if (typeof define === 'function' && define.amd) {
-    define(function () {
-        return Emitter;
-    });
-}
-// browser global
-else {
-    global.Emitter = Emitter;
-}
-
-}(this));
