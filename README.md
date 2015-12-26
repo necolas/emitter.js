@@ -1,11 +1,15 @@
 # emitter.js
 
+![unmaintained](http://img.shields.io/badge/status-unmaintained-red.png)
+
 [![Build Status](https://secure.travis-ci.org/necolas/emitter.js.png?branch=master)](http://travis-ci.org/necolas/emitter.js)
 
 JavaScript event-emitter.
 
 ## Installation
 
+[npm](https://npmjs.org/): `npm install emitter.js`
+[Component(1)](https://github.com/component/component): `component install necolas/emitter.js`
 [Bower](http://bower.io/): `bower install emitter.js`
 
 ## API
